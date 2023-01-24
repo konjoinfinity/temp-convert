@@ -17,6 +17,7 @@ const Input: React.FC<Props> = ({name, value, func, icon}) => {
     style={{width: Dimensions.get('screen').width * 0.8}}
     label={name}
     variant="outlined"
+    keyboardType='decimal-pad'
     value={value}
     onChangeText={deg => func(deg)}
     blurOnSubmit={false}
@@ -31,6 +32,15 @@ export default function App() {
   const [kelvin, setKelvin] = useState('')
 
   return (
+
+
+    // F to C => (68°F - 32) × 5/9 = 20 °C
+    // C to F => 20°C × 9/5 + 32 = 68 °F
+    // C to K => 10°C + 273.15 = 283.15 K
+    // K to C => 300K - 273.15 = 26.85 °C
+    // F to K => (60°F + 459.67) × 5/9 = 288.71 K
+    // K to F => 300K × 9/5 - 459.67 = 80.33 °F
+
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View style={styles.container}>
       <Input name={'Fahrenheit'} value={fahrenheit} func={setFahrenheit} icon={'temperature-fahrenheit'}/>
