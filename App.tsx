@@ -7,11 +7,12 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 interface Props {
   name: string
   value: number
+  set: Function
   func: Function
   icon: any
 }
 
-const Input: React.FC<Props> = ({name, value, func, icon}) => {
+const Input: React.FC<Props> = ({name, value, set, func, icon}) => {
   return (
     <TextInput
     style={{width: Dimensions.get('screen').width * 0.8}}
@@ -19,7 +20,7 @@ const Input: React.FC<Props> = ({name, value, func, icon}) => {
     variant="outlined"
     keyboardType='decimal-pad'
     value={`${value}`}
-    onChangeText={deg => func(deg)}
+    onChangeText={deg => {set(deg); func()}}
     blurOnSubmit={false}
     trailing={props => (
     <IconButton icon={props => <Icon name={icon} {...props} />} {...props} />)} />
@@ -63,9 +64,9 @@ export default function App() {
 
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View style={styles.container}>
-      <Input name={'Fahrenheit'} value={fahrenheit} func={setFahrenheit} icon={'temperature-fahrenheit'}/>
-      <Input name={'Celsius'} value={celsius} func={setCelsius} icon={'temperature-celsius'}/>
-      <Input name={'Kelvin'} value={kelvin} func={setKelvin} icon={'temperature-kelvin'}/>
+      <Input name={'Fahrenheit'} value={fahrenheit} set={setFahrenheit} func={fToCandK} icon={'temperature-fahrenheit'}/>
+      <Input name={'Celsius'} value={celsius} set={setCelsius} func={cToFandK} icon={'temperature-celsius'}/>
+      <Input name={'Kelvin'} value={kelvin} set={setKelvin} func={kToCandF} icon={'temperature-kelvin'}/>
     </View>
     </TouchableWithoutFeedback>
   );
