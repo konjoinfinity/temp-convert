@@ -1,26 +1,26 @@
 
 import { StyleSheet, Text, View, Dimensions, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import React, { useState } from 'react';
-import { Stack, TextInput, IconButton } from "@react-native-material/core";
+import { Button, TextInput, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+
 
 interface Props {
   name: string
   value: number
   set: Function
-  func: Function
   icon: any
 }
 
-const Input: React.FC<Props> = ({name, value, set, func, icon}) => {
+const Input: React.FC<Props> = ({name, value, set, icon}) => {
   return (
     <TextInput
     style={{width: Dimensions.get('screen').width * 0.8}}
     label={name}
-    variant="outlined"
+    textAlign='right'
     keyboardType='decimal-pad'
     value={`${value}`}
-    onChangeText={deg => {set(deg); func()}}
+    onChangeText={deg => {set(deg)}}
     blurOnSubmit={false}
     trailing={props => (
     <IconButton icon={props => <Icon name={icon} {...props} />} {...props} />)} />
@@ -32,31 +32,19 @@ export default function App() {
   const [celsius, setCelsius] = useState(0)
   const [kelvin, setKelvin] = useState(273.15)
 
-  const fToCandK = () => {
-    // F to C => (68°F - 32) × 5/9 = 20 °C
-    let convertFtoC = (fahrenheit - 32) * 5/9
-    setCelsius(convertFtoC)
-    // F to K => (60°F + 459.67) × 5/9 = 288.71 K
-    let convertFtoK = (fahrenheit + 459.67) * 5/9
-    setKelvin(convertFtoK)
-        }
-  
-  const cToFandK = () => {
-    // C to F => 20°C × 9/5 + 32 = 68 °F
-    let convertCtoF = celsius * 9/5 + 32
-    setFahrenheit(convertCtoF)
-    // C to K => 10°C + 273.15 = 283.15 K
-    let convertCtoK = celsius + 273.15
-    setKelvin(convertCtoK)
-  }
-        
-  const kToCandF = () => {
-    // K to C => 300K - 273.15 = 26.85 °C
-    let convertKtoC = kelvin - 273.15
-    setCelsius(convertKtoC)
-    // K to F => 300K × 9/5 - 459.67 = 80.33 °F
-    let convertKtoF = kelvin * 9/5 - 459.67
-    setFahrenheit(convertKtoF)
+  const convertAll = () => {
+    // if(celsius == 0 && kelvin == 237.15)
+    setCelsius((fahrenheit - 32) * 0.5556)
+    console.log(fahrenheit + 459.67)
+    setKelvin((fahrenheit + 459.67) * 0.5556)
+    // let convertCtoF = celsius * 9/5 + 32
+    // setFahrenheit(Math.round(convertCtoF*10)/10)
+    // let convertCtoK = celsius + 273.15
+    // setKelvin(Math.round(convertCtoK*10)/10)
+    // let convertKtoC = kelvin - 273.15
+    // setCelsius(Math.round(convertKtoC*10)/10)
+    // let convertKtoF = kelvin * 9/5 - 459.67
+    // setFahrenheit(Math.round(convertKtoF*10)/10)
   }
         
 
@@ -64,9 +52,10 @@ export default function App() {
 
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View style={styles.container}>
-      <Input name={'Fahrenheit'} value={fahrenheit} set={setFahrenheit} func={fToCandK} icon={'temperature-fahrenheit'}/>
-      <Input name={'Celsius'} value={celsius} set={setCelsius} func={cToFandK} icon={'temperature-celsius'}/>
-      <Input name={'Kelvin'} value={kelvin} set={setKelvin} func={kToCandF} icon={'temperature-kelvin'}/>
+      <Input name={'Fahrenheit'} value={fahrenheit} set={setFahrenheit} icon={'temperature-fahrenheit'}/>
+      <Input name={'Celsius'} value={celsius} set={setCelsius} icon={'temperature-celsius'}/>
+      <Input name={'Kelvin'} value={kelvin} set={setKelvin} icon={'temperature-kelvin'}/>
+      <Button title="Convert" onPress={() => convertAll()} style={{marginBottom: Dimensions.get('screen').height * 0.1, marginTop:10, padding: 10}}/>
     </View>
     </TouchableWithoutFeedback>
   );
