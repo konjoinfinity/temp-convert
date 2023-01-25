@@ -3,7 +3,6 @@ import { View, Dimensions, TouchableWithoutFeedback, Keyboard } from 'react-nati
 import React, { useState } from 'react';
 import { Button, TextInput, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { Shadow } from 'react-native-shadow-2';
 
 interface Props {
   name: string
@@ -55,7 +54,7 @@ export default function App() {
     let kToC = Number(kelvin) - 273.15
     setCelsius(Math.ceil(kToC * 100) / 100)
   }
-  
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={{flex: 1,backgroundColor: '#000',alignItems: 'center',justifyContent: 'center'}}>
