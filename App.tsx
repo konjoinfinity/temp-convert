@@ -35,7 +35,7 @@ export default function App() {
   const [unit, setUnit] = useState('')
 
   const fToCandK = () => {
-    let fToC = Number(fahrenheit) - 32 * 0.5556
+    let fToC = (Number(fahrenheit) - 32) * 0.5556
     setCelsius(Math.ceil(fToC * 100) / 100)
     let fToK = 459.67 * 0.5556 + Number(fahrenheit)
     setKelvin(Math.ceil(fToK * 100) / 100)
